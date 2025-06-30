@@ -1,0 +1,16 @@
+tell application "Contacts"
+	set selectedContacts to the selection
+	if selectedContacts is {} then
+		display dialog "No contacts selected." buttons {"OK"} default button 1
+		return
+	end if
+	
+	set mdLinks to {}
+	repeat with thisPerson in selectedContacts
+		set personName to name of thisPerson
+		set personID to id of thisPerson
+		set end of mdLinks to "[" & personName & "](addressbook://" & personID & ")"
+	end repeat
+end tell
+
+set the clipboard to (mdLinks as text)
